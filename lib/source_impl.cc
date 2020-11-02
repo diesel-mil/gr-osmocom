@@ -493,6 +493,22 @@ double source_impl::set_sample_rate(double rate)
   return _sample_rate;
 }
 
+int source_impl::set_hw_sync_mode( char enable)
+{
+
+//      BOOST_FOREACH( std::string dev, hackrf_source_c::get_devices() )
+//      dev_list.push_back( dev );
+
+#ifdef ENABLE_HACKRF
+    BOOST_FOREACH( source_iface *dev, _devs )
+    {
+      dev->set_hw_sync_mode(enable);
+    }
+    #endif
+    return 0;
+}
+
+
 double source_impl::get_sample_rate()
 {
   double sample_rate = 0;

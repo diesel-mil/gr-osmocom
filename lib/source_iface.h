@@ -60,6 +60,11 @@ public:
    */
   virtual double set_sample_rate( double rate ) = 0;
 
+
+//  virtual double set_bb_gain( double gain, size_t chan = 0 ) { return 0; }
+
+  virtual int set_hw_sync_mode( char enable) {return 0;}
+
   /*!
    * Get the sample rate for the underlying radio hardware.
    * This is the actual sample rate and may differ from the rate set.

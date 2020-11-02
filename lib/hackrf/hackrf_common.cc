@@ -70,7 +70,8 @@ hackrf_common::hackrf_common(const std::string &args) :
       if (list->serial_numbers[dev_index]) {
         std::string serial(list->serial_numbers[dev_index]);
         if (serial.compare(serial.length() - target_serial.length(),
-                           target_serial.length(), target_serial) == 0) {
+                           target_serial.length(), target_serial) == 0)
+        {
           break;
         }
       }
@@ -128,6 +129,16 @@ hackrf_common::hackrf_common(const std::string &args) :
   std::cerr << "Using " << hackrf_board_id_name(hackrf_board_id(board_id)) << " "
             << "with firmware " << version
             << std::endl;
+
+
+  hackrf_set_clkout_enable(_dev.get(), 1);
+  
+  std::cout << "Opened HACKRF blabla \n";
+
+  uint16_t value_buffer;
+  hackrf_si5351c_read(_dev.get(), 0 , &value_buffer);
+
+  std::cout << "Serial: " << target_serial << " PLL lock: " << value_buffer << " HW sync: \n";// << hackrf_set_hw_sync_mode(_dev.get(), 1) << "\n";
 }
 
 void hackrf_common::close(void *dev)
@@ -231,6 +242,11 @@ double hackrf_common::set_sample_rate( double rate )
 
   _sample_rate = rate;
   return get_sample_rate();
+}
+
+int hackrf_common::set_hw_sync_mode(char enable)
+{
+  return hackrf_set_hw_sync_mode(_dev.get(), enable);
 }
 
 double hackrf_common::get_sample_rate()

@@ -44,6 +44,8 @@ public:
   double set_sample_rate( double rate );
   double get_sample_rate( void );
 
+  int set_hw_sync_mode( char enable);
+
   osmosdr::freq_range_t get_freq_range( size_t chan = 0 );
   double set_center_freq( double freq, size_t chan = 0 );
   double get_center_freq( size_t chan = 0 );

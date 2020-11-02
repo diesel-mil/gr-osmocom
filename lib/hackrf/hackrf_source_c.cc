@@ -264,6 +264,12 @@ double hackrf_source_c::set_sample_rate( double rate )
   return hackrf_common::set_sample_rate(rate);
 }
 
+int hackrf_source_c::set_hw_sync_mode(char enable)
+{
+  return hackrf_common::set_hw_sync_mode(enable);
+}
+
+
 double hackrf_source_c::get_sample_rate()
 {
   return hackrf_common::get_sample_rate();
