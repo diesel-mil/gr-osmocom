@@ -130,15 +130,16 @@ hackrf_common::hackrf_common(const std::string &args) :
             << "with firmware " << version
             << std::endl;
 
-
+/*
   hackrf_set_clkout_enable(_dev.get(), 1);
-  
+
   std::cout << "Opened HACKRF blabla \n";
 
   uint16_t value_buffer;
   hackrf_si5351c_read(_dev.get(), 0 , &value_buffer);
 
   std::cout << "Serial: " << target_serial << " PLL lock: " << value_buffer << " HW sync: \n";// << hackrf_set_hw_sync_mode(_dev.get(), 1) << "\n";
+  */
 }
 
 void hackrf_common::close(void *dev)
@@ -247,6 +248,18 @@ double hackrf_common::set_sample_rate( double rate )
 int hackrf_common::set_hw_sync_mode(char enable)
 {
   return hackrf_set_hw_sync_mode(_dev.get(), enable);
+}
+
+double hackrf_common::set_clkout_enable(bool enable)
+{
+  return hackrf_set_clkout_enable(_dev.get(), enable);
+}
+
+uint16_t hackrf_common::get_PLL_status(size_t chan)
+{
+  uint16_t value_buffer;
+  hackrf_si5351c_read(_dev.get(), 0 , &value_buffer);
+  return value_buffer;
 }
 
 double hackrf_common::get_sample_rate()

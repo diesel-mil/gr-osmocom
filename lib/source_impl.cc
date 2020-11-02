@@ -495,17 +495,32 @@ double source_impl::set_sample_rate(double rate)
 
 int source_impl::set_hw_sync_mode( char enable)
 {
-
-//      BOOST_FOREACH( std::string dev, hackrf_source_c::get_devices() )
-//      dev_list.push_back( dev );
-
-#ifdef ENABLE_HACKRF
     BOOST_FOREACH( source_iface *dev, _devs )
     {
       dev->set_hw_sync_mode(enable);
     }
-    #endif
+
     return 0;
+}
+
+double source_impl::set_clkout_enable( bool enable)
+{
+    BOOST_FOREACH( source_iface *dev, _devs )
+    {
+      dev->set_clkout_enable(enable);
+    }
+
+    return 0;
+}
+
+uint16_t source_impl::get_PLL_status( size_t chan)
+{
+  size_t channel = 0;
+  BOOST_FOREACH( source_iface *dev, _devs )
+    for (size_t dev_chan = 0; dev_chan < dev->get_num_channels(); dev_chan++)
+      if ( chan == channel++ )
+        return dev->get_PLL_status();
+    return -1;
 }
 
 

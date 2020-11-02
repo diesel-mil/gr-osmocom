@@ -63,7 +63,9 @@ public:
 
 //  virtual double set_bb_gain( double gain, size_t chan = 0 ) { return 0; }
 
-  virtual int set_hw_sync_mode( char enable) {return 0;}
+  virtual int set_hw_sync_mode( char enable = true) {return 0;}
+  virtual uint16_t get_PLL_status(size_t chan = 0) {return 0;}
+  virtual double set_clkout_enable( bool enable = true) {return 0;}
 
   /*!
    * Get the sample rate for the underlying radio hardware.

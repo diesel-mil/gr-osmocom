@@ -93,6 +93,8 @@ public:
   double get_sample_rate( void );
 
   int set_hw_sync_mode(char enable);
+  uint16_t get_PLL_status(size_t chan);
+  double set_clkout_enable( bool enable);
 
   osmosdr::freq_range_t get_freq_range( size_t chan = 0 );
   double set_center_freq( double freq, size_t chan = 0 );

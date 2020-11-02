@@ -89,6 +89,10 @@ public:
 
   virtual int set_hw_sync_mode( char enable) = 0;
 
+  virtual uint16_t get_PLL_status( size_t chan = 0) = 0;
+
+  virtual double set_clkout_enable( bool enable) = 0;
+
   /*!
    * Get the tunable frequency range for the underlying radio hardware.
    * \param chan the channel index 0 to N-1

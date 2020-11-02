@@ -269,6 +269,16 @@ int hackrf_source_c::set_hw_sync_mode(char enable)
   return hackrf_common::set_hw_sync_mode(enable);
 }
 
+double hackrf_source_c::set_clkout_enable(bool enable)
+{
+  return hackrf_common::set_clkout_enable(enable);
+}
+
+uint16_t hackrf_source_c::get_PLL_status(size_t chan)
+{
+  return hackrf_common::get_PLL_status(chan);
+}
+
 
 double hackrf_source_c::get_sample_rate()
 {
