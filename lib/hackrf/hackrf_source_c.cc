@@ -30,6 +30,7 @@
 
 #include <stdexcept>
 #include <iostream>
+#include <chrono>
 
 #include <gnuradio/io_signature.h>
 
@@ -193,6 +194,8 @@ int hackrf_source_c::work( int noutput_items,
                         gr_vector_const_void_star &input_items,
                         gr_vector_void_star &output_items )
 {
+  //using namespace std::chrono_literals;
+  using namespace std::chrono;
   gr_complex *out = (gr_complex *)output_items[0];
 
   bool running = false;
@@ -202,9 +205,15 @@ int hackrf_source_c::work( int noutput_items,
 
   {
     std::unique_lock<std::mutex> lock(_buf_mutex);
-
-    while (_buf_used < 3 && running) // collect at least 3 buffers
-      _buf_cond.wait( lock );
+    std::cv_status timeout_status;
+    std::chrono::duration<int, std::milli> d(1000);
+    while (_buf_used < 3 && running){ // collect at least 3 buffers
+      timeout_status = _buf_cond.wait_for( lock, d);
+      if (timeout_status == std::cv_status::timeout){
+        std::cerr << "Timeout reached! Qutting!" << std::endl;
+        return WORK_DONE;
+      }
+    }
   }
 
   if ( ! running )
